@@ -27,17 +27,16 @@ export function EmailDetails() {
     }
 
     if (!email) return <div>No emails to show...</div>
-    const formattedDate = utilService.formatDate(email.sentAt)
 
     return (
         <section className="email-details">
             <button onClick={() => navigate('/email')}>Back</button>
             <h1>{email.subject}</h1>
             <h3>{email.from}</h3>
-            <p>{formattedDate}</p>
             <div className="email-body">
                 <LongTxt txt={email.body} length={100} />
             </div>
+            <p>{new Date(email.sentAt).toLocaleString()}</p>
         </section >
     )
 }
