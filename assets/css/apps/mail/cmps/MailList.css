@@ -1,1 +1,4 @@
  /* mail list */
+ *{
+    box-sizing: border-box;
+ }

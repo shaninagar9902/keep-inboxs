@@ -1,0 +1,37 @@
+.long-txt p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--gray4);
+}
+
+.long-txt button {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--clr1);
+    background: none;
+    border: none;
+    padding: 0 0 0 var(--sp-sm);
+    margin: 0;
+    box-shadow: none;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.long-txt button:hover {
+    background: none;
+    color: var(--clr1-dark);
+    transform: none;
+    box-shadow: none;
+}
+
+@media (max-width: 600px) {
+
+    .email-details {
+        padding: var(--sp-xl) var(--sp-lg);
+        border-radius: var(--radius-lg);
+    }
+
+    .email-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
