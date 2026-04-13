@@ -6,6 +6,7 @@ export const utilService = {
     padNum,
     getDayName,
     getMonthName,
+    formatDate
 }
 
 function makeId(length = 6) {
@@ -59,4 +60,30 @@ function getMonthName(date) {
         "July", "August", "September", "October", "November", "December"
     ]
     return monthNames[date.getMonth()]
+}
+
+function formatDate(timestamp) {
+    const now = new Date()
+    const date = new Date(timestamp)
+
+    const isToday = now.toDateString() === date.toDateString()
+    if (isToday) {
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }
+
+    const yesterday = new Date()
+    yesterday.setDate(now.getDate() - 1)
+    const isYesterday = yesterday.toDateString() === date.toDateString()
+    if (isYesterday) {
+        return 'Yesterday'
+    }
+
+    const diffInTime = now.getTime() - date.getTime()
+    const diffInDays = diffInTime / (1000 * 3600 * 24)
+    if (diffInDays < 7) {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        return days[date.getDay()]
+    }
+
+    return date.toLocaleDateString()
 }

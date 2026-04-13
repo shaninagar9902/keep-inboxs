@@ -1,11 +1,12 @@
 import { emailService } from "../services/email.service.js"
-import { LongTxt } from "../cmps/LongTxt.jsx"
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+import { LongTxt } from "../../../cmps/LongTxt.jsx"
+import { utilService } from "../../../services/util.service.js"
+// import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
-export function emailDetails() {
+export function EmailDetails() {
     const [email, setEmail] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
@@ -25,21 +26,17 @@ export function emailDetails() {
             })
     }
 
-    if (!email) return <div>Loading...</div>
+    if (!email) return <div>No emails to show...</div>
+    const formattedDate = utilService.formatDate(email.sentAt)
 
     return (
         <section className="email-details">
             <button onClick={() => navigate('/email')}>Back</button>
-            <h1>Email details</h1>
-            <h3>ID: {email.id}</h3 >
-            <h3>Title: {email.title}</h3 >
-            <div className="description-container">
-                <h3>Description:</h3>
-                <LongTxt txt={email.description} length={100} />
-            </div>
-            <div>
-                <Link to={`/email/${email.prevEmailId}`}>Previous Email | </Link>
-                <Link to={`/email/${email.nextEmailId}`}>Next Email</Link>
+            <h1>{email.subject}</h1>
+            <h3>{email.from}</h3>
+            <p>{formattedDate}</p>
+            <div className="email-body">
+                <LongTxt txt={email.body} length={100} />
             </div>
         </section >
     )
