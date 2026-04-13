@@ -68,7 +68,6 @@ function query(filterBy = {}) {
 
 function get(emailId) {
     return asyncStorageService.get(EMAIL_KEY, emailId)
-    // .then(email => _setNextPrevEmailId(email))
 }
 
 function remove(emailId) {
@@ -88,7 +87,7 @@ function save(email) {
 function getEmptyEmail() {
     return {
         id: '',
-        // subject: 'Miss you!',
+        subject: '',
         body: '',
         isRead: false,
         sentAt: null,
@@ -102,14 +101,14 @@ function getEmptyEmail() {
 
 function getDefaultFilter() { return { txt: '', status: 'inbox' } }
 
-function _createEmail(subject, body, from) {
+function _createEmail(subject, body, from, sentAt) {
     const email = getEmptyEmail()
     email.id = utilService.makeId()
     email.subject = subject
     email.body = body
     email.from = from
     email.to = loggedinUser.email
-    email.sentAt = Date.now()
+    email.sentAt = (sentAt) ? new Date(sentAt).getTime() : Date.now()
     return email
 }
 
@@ -117,22 +116,12 @@ function _createEmails() {
     let emails = storageService.loadFromStorage(EMAIL_KEY)
     if (!emails || !emails.length) {
         emails = [
+            //demos
             _createEmail('Your booking has been successfully cancelled', 'Booking ID: 648296339 We have confirmed the cancellation of your booking at Amanti MadeForTwo Hotels - Ayia Napa.', 'Agoda Customer Service'),
             _createEmail('Your automatic payment could not be created through Agoda Company Pte. Ltd.', 'We were unable to complete your request to set up automatic payment with Agoda Company Pte. Ltd.. For more details, please visit our support center. You can also return to Agoda Company Pte. Ltd. and select a different payment method.', 'service@paypal.co.il'),
-            _createEmail('Gazelle is truly timeless', 'With a suede upper and gum rubber outsole, Gazelle has been moving strong since the ‘60s. Shop the streetwear staple and add timeless retro style to your everyday look.', 'adidas'),
-            _createEmail('How does the sound quality of high-end amplifiers compare to regular ones? Is there a...?', 'How does the sound quality of high-end amplifiers compare to regular ones? Is there a way to determine which one has better sound quality?', 'Quora Digest')
+            _createEmail('Gazelle is truly timeless', 'With a suede upper and gum rubber outsole, Gazelle has been moving strong since the ‘60s. Shop the streetwear staple and add timeless retro style to your everyday look.', 'adidas', '09/09/2025'),
+            _createEmail('How does the sound quality of high-end amplifiers compare to regular ones? Is there a...?', 'How does the sound quality of high-end amplifiers compare to regular ones? Is there a way to determine which one has better sound quality?', 'Quora Digest', '01/04/2025')
         ]
         storageService.saveToStorage(EMAIL_KEY, emails)
     }
-}
-
-function _setNextPrevEmailId(email) {
-    return asyncStorageService.query(EMAIL_KEY).then((emails) => {
-        const emailIdx = emails.findIndex((currEmail) => currEmail.id === email.id)
-        const nextEmail = emails[emailIdx + 1] ? emails[emailIdx + 1] : emails[0]
-        const prevEmail = emails[emailIdx - 1] ? emails[emailIdx - 1] : emails[emails.length - 1]
-        email.nextEmailId = nextEmail.id
-        email.prevEmailId = prevEmail.id
-        return email
-    })
 }

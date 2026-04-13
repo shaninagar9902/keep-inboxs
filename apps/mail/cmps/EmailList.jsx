@@ -1,17 +1,23 @@
 import { EmailPreview } from "./EmailPreview.jsx";
-const { Link } = ReactRouterDOM
+
 export function EmailList({ emails, onRemoveEmail }) {
     return (
-        <ul className="email-list">
-            {emails.map(email =>
-                <li key={email.id} className="email-txt">
-                    <EmailPreview email={email} />
-                    <section>
-                        <button onClick={() => onRemoveEmail(email.id)}>Remove Email</button>
-                        <button><Link to={`/email/${email.id}`}>Details</Link></button>
-                    </section>
-                </li>
-            )}
-        </ul >
+        <table>
+            <thead>
+                <tr>
+                    <th>From</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {emails.map(email => (
+                    <EmailPreview key={email.id} email={email} onRemoveEmail={onRemoveEmail} />
+                    // <button onClick={() => onRemoveEmail(email.id)}>Remove Email</button>
+                    // <button><Link to={`/email/${email.id}`}>Details</Link></button>
+                ))}
+            </tbody>
+        </table>
     )
 }

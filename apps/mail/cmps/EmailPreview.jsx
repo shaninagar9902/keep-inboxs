@@ -1,13 +1,22 @@
 import { utilService } from "../../../services/util.service.js"
+const { useNavigate } = ReactRouterDOM
 
-export function EmailPreview({ email }) {
+export function EmailPreview({ email, onRemoveEmail }) {
+    const navigate = useNavigate()
     const formattedDate = utilService.formatDate(email.sentAt)
+
+    function getDetails(ev) {
+        if (ev.target.tagName === 'BUTTON') return
+        navigate(`/email/${email.id}`)
+    }
     return (
-        <article className="email-preview">
-            <h2>{email.from}</h2>
-            <h2>{email.subject}</h2>
-            <h2>{email.body}</h2>
-            <h2>{formattedDate}</h2>
-        </article>
+        <tr className="email-preview" onClick={getDetails}>
+            <td>{email.from}</td>
+            <td>{email.subject}</td>
+            <td>{formattedDate}</td>
+            <td>
+                <button onClick={() => onRemoveEmail(email.id)}>🗑️</button>
+            </td>
+        </tr >
     )
 }

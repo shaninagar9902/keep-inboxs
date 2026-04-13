@@ -20,12 +20,16 @@ export function EmailIndex() {
     function onRemoveEmail(emailId) {
         emailService.remove(emailId)
             .then(() => {
-                setEmails(prevEmails => prevEmails.filter(email => emailId !== email.id))
-                showSuccessMsg(`Email removed! ${emailId}`)
+                const updatedEmails = emails.filter(email => email.id !== emailId)
+                setEmails(updatedEmails)
+                showSuccessMsg(`Email removed!`)
+                if (updatedEmails.length === 0) {
+                    window.location.reload()
+                }
             })
             .catch(err => {
                 alert('Error!', err)
-                showErrorMsg(`Problem Removing` + emailId)
+                showErrorMsg(`Problem Removing`)
             })
     }
 
