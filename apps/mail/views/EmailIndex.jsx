@@ -2,6 +2,7 @@ import { EmailList } from "../cmps/EmailList.jsx"
 import { EmailFilter } from "../cmps/EmailFilter.jsx"
 import { emailService } from "../services/email.service.js"
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
+import { EmailCompose } from "../cmps/EmailCompose.jsx"
 
 const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
@@ -9,6 +10,7 @@ const { Link } = ReactRouterDOM
 export function EmailIndex() {
 
     const [emails, setEmails] = useState([])
+    const [isComposeOpen, setIsComposeOpen] = useState(false)
     const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
 
     useEffect(() => {
@@ -41,11 +43,18 @@ export function EmailIndex() {
     // if (!emails.length) return <div>Loading...</div>
     return (
         <section className="email-index">
-            {/* <Link to="/email/add">Add Email</Link> */}
+            <button className="btn-compose" onClick={() => setIsComposeOpen(true)}>✎ New Email</button>
             <EmailFilter filterBy={filterBy}
                 onSetFilterBy={onSetFilterBy} />
-            <EmailList emails={emails}
-                onRemoveEmail={onRemoveEmail} />
+            {!emails.length ? (
+                <div>Loading...</div>
+            ) : (
+                <EmailList emails={emails}
+                    onRemoveEmail={onRemoveEmail} />
+            )}
+            {isComposeOpen && (
+                <EmailCompose onToggleCompose={() => setIsComposeOpen(false)} />
+            )}
         </section>
     )
 }

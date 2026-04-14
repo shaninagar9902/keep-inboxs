@@ -1,23 +1,24 @@
 import { EmailPreview } from "./EmailPreview.jsx";
+import { EmailCompose } from "./EmailCompose.jsx";
 
 export function EmailList({ emails, onRemoveEmail }) {
     return (
-        <table>
-            {/* <thead>
+        <section>
+            <table>
+                {/* <thead>
                 <tr>
-                    <th>From</th>
-                    <th>Subject</th>
-                    <th>Date</th>
+                <th>From</th>
+                <th>Subject</th>
+                <th>Date</th>
                 </tr>
-            </thead> */}
-            <tbody>
+                </thead> */}
+                <tbody>
 
-                {emails.map(email => (
-                    <EmailPreview key={email.id} email={email} onRemoveEmail={onRemoveEmail} />
-                    // <button onClick={() => onRemoveEmail(email.id)}>Remove Email</button>
-                    // <button><Link to={`/email/${email.id}`}>Details</Link></button>
-                ))}
-            </tbody>
-        </table>
+                    {emails.map(email => (
+                        <EmailPreview key={email.id} email={email} onRemoveEmail={onRemoveEmail} />
+                    ))}
+                </tbody>
+            </table>
+        </section>
     )
 }
