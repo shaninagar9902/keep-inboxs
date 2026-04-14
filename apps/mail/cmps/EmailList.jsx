@@ -3,13 +3,13 @@ import { EmailPreview } from "./EmailPreview.jsx";
 export function EmailList({ emails, onRemoveEmail }) {
     return (
         <table>
-            <thead>
+            {/* <thead>
                 <tr>
                     <th>From</th>
                     <th>Subject</th>
                     <th>Date</th>
                 </tr>
-            </thead>
+            </thead> */}
             <tbody>
 
                 {emails.map(email => (

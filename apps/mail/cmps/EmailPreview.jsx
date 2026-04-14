@@ -10,7 +10,7 @@ export function EmailPreview({ email, onRemoveEmail }) {
         navigate(`/email/${email.id}`)
     }
     return (
-        <tr className="email-preview" onClick={getDetails}>
+        <tr className="email-preview" onClick={getDetails} style={{ cursor: 'pointer' }}>
             <td>{email.from}</td>
             <td>{email.subject}</td>
             <td>{formattedDate}</td>
